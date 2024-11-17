@@ -32,12 +32,7 @@ These IDs should be present in the rows and columns of the dataset.
 input_ids <- c('C00042', 'C00149', 'C00036')
 # Run the minfer function to analyze the data
 results <- minfer(input_ids)
-# Print the results for each dataset
-for (i in 1:length(results)) {
-    cat("Results for dataset ", i, ":\n")
-    print(results[[i]])
-    cat("\n")
-}
+print(results)
 ```
 # Example for calculation of Jacobian Matrices
 Step 1: Load Example Data
