@@ -1,0 +1,19 @@
+Package: MInfer
+Type: Package
+Title: What the Package Does (Title Case)
+Version: 0.1.0
+Author: Thomas Nagele, Jana Schwarzerova
+Maintainer: The package maintainer <Jana.Schwarezrova@vut.cz>
+Description: MInfer enables the construction of detailed interaction networks that capture the dynamic relationships between metabolites. We demonstrate the utility of MInfer through its application to various metabolomic datasets, revealing key metabolic pathways and potential regulatory mechanisms. Our results suggest that MInfer can significantly enhance the interpretation of metabolomic data, providing a robust tool for the study of complex biological systems.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Depends: R (>= 4.0.0)
+Imports:
+    MASS,
+    stats,
+    graphics,
+    grDevices,
+    pheatmap,
+    rgl
+RoxygenNote: 7.2.3
