@@ -2,6 +2,8 @@
 
 **MInfer** is an R package designed for analyzing metabolomics data. It provides tools for data preparation, covariance matrix generation, Jacobian matrix computation, and visualization of metabolite interaction networks.
 
+MInfer represents a novel computational framework that effectively facilitates the transition from MetaboAnalyst to Jacobian analysis, enhancing the exploration of metabolomic networks. This integration allows researchers to harness the strengths of both platforms, enabling a comprehensive analysis that captures the dynamic interactions between metabolites. 
+
 ---
 
 ## Installation
