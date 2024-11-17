@@ -22,7 +22,7 @@ library(MInfer)
 ```
 
 Below is a example demonstrating how to use MInfer:
-### Example Usage for metabolite interaction network (MIN)
+### Example for metabolite interaction network (MIN)
 
 1. Define Input Metabolite IDs for Testing
 The first step is to define a list of metabolite IDs (KEGG IG) that you wish to analyze.
@@ -35,7 +35,7 @@ input_ids <- c('C00042', 'C00149', 'C00036')
 results <- minfer(input_ids)
 print(results)
 ```
-### Example Usage Example for calculation of Jacobian Matrices
+### Example for calculation of Jacobian Matrices
 Step 1: Load Example Data
 The package includes example data for testing:
 
