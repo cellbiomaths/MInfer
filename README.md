@@ -20,9 +20,26 @@ devtools::install_github("https://github.com/cellbiomaths/MInfer")
 # Once installed, load the package:
 library(MInfer)
 ```
-Example Usage
-Below is a complete example demonstrating how to use MInfer.
+## Example Usage
+Below is a example demonstrating how to use MInfer.
 
+1. Define Input Metabolite IDs for Testing
+The first step is to define a list of metabolite IDs (KEGG IG) that you wish to analyze.
+These IDs should be present in the rows and columns of the dataset.
+
+```r
+# Define metabolite IDs
+input_ids <- c('C00042', 'C00149', 'C00036')
+# Run the minfer function to analyze the data
+results <- minfer(input_ids)
+# Print the results for each dataset
+for (i in 1:length(results)) {
+    cat("Results for dataset ", i, ":\n")
+    print(results[[i]])
+    cat("\n")
+}
+```
+# Example for calculation of Jacobian Matrices
 Step 1: Load Example Data
 The package includes example data for testing:
 
