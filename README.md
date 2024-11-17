@@ -12,10 +12,10 @@ You can install **MInfer** directly from GitHub using the following commands:
 
 ```r
 # Install devtools if not already installed
-install.packages("devtools")
+# install.packages("devtools")
 
 # Install MInfer from GitHub
-devtools::install_github("cellbiomaths/MInfer")
+devtools::install_github("https://github.com/cellbiomaths/MInfer")
 
 # Once installed, load the package:
 library(MInfer)
