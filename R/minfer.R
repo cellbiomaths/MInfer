@@ -26,50 +26,62 @@
 #'     print(results[[i]])
 #'     cat("\n")
 #' }
-minfer <- function(input_ids) {
-    data(MetaboAnalystMINs)  # Ensure the file contains a variable named data_list
+#'
+#'
+minfer <- function(input_ids, rdata_file) {
+    # Load data
+    data(MetaboAnalystMINs)
 
-    # Verify the data_list object exists
-    if (!exists("data_list")) {
-        stop("The RData file does not contain a data_list object.")
-    }
-
-    # Initialize a list to store results for each dataset
     all_results <- list()
+    combined_matrix <- matrix(1, nrow = length(input_ids), ncol = length(input_ids),
+                              dimnames = list(input_ids, input_ids))
 
-    # Process each dataset in the data_list
-    for (data in data_list) {
-        # Ensure all input_ids are present in both rows and columns of the dataset
-        if (all(input_ids %in% rownames(data)) && all(input_ids %in% colnames(data))) {
+    # Iterate through each dataset in data_list
+    for (i in seq_along(data_list)) {
+        data <- data_list[[i]]
 
-            # Initialize an empty result matrix for the current dataset
-            result_matrix <- matrix(0, nrow = length(input_ids), ncol = length(input_ids),
-                                    dimnames = list(input_ids, input_ids))
+        # Verify the availability of metabolites
+        available_ids <- intersect(input_ids, rownames(data))
+        available_ids <- intersect(available_ids, colnames(data))
 
-            # Populate the result matrix based on the dataset values
-            for (i in seq_along(input_ids)) {
-                for (j in seq_along(input_ids)) {
-                    # Retrieve the value for the pair (i, j) from the dataset
-                    if (!is.na(data[input_ids[i], input_ids[j]])) {
-                        if (data[input_ids[i], input_ids[j]] == 1) {
-                            result_matrix[i, j] <- 1
-                        } else {
-                            result_matrix[i, j] <- 0
-                        }
-                    } else {
-                        result_matrix[i, j] <- NA  # Assign NA if no value is present
+        # Create a matrix filled with zeros for all metabolites
+        result_matrix <- matrix(0, nrow = length(input_ids), ncol = length(input_ids),
+                                dimnames = list(input_ids, input_ids))
+
+        # If there are available metabolites, set interactions
+        if (length(available_ids) > 0) {
+            for (j in seq_along(available_ids)) {
+                for (k in seq_along(available_ids)) {
+                    # Get positions in the result_matrix corresponding to metabolites in input_ids
+                    row_index <- match(available_ids[j], input_ids)
+                    col_index <- match(available_ids[k], input_ids)
+
+                    # Assign a value of 1 for interactions (only if the value in the dataset is 1)
+                    value <- data[available_ids[j], available_ids[k]]
+                    if (!is.na(value) && value == 1) {
+                        result_matrix[row_index, col_index] <- 1
                     }
                 }
             }
-
-            # Store the result matrix in the results list
-            all_results[[length(all_results) + 1]] <- result_matrix
-        } else {
-            # Warn if any input_ids are missing in the current dataset
-            warning("Some input IDs are missing in the current dataset, skipping this dataset.")
         }
+
+        # Name the matrix according to the corresponding dataset in data_list
+        dataset_name <- names(data_list)[i]
+        all_results[[dataset_name]] <- result_matrix
+
     }
 
-    # Return all results
+    # Combine all results using OR operation
+    combined_matrix <- matrix(0, nrow = length(input_ids), ncol = length(input_ids),
+                              dimnames = list(input_ids, input_ids))
+
+    for (result_matrix in all_results) {
+        combined_matrix <- pmax(combined_matrix, result_matrix, na.rm = TRUE)
+    }
+
+    # Add the combined intersection matrix to all_results
+    all_results[["Intersection"]] <- combined_matrix
+
     return(all_results)
 }
+
