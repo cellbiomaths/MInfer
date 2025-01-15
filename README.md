@@ -1,4 +1,4 @@
-# MInfer
+# MInfer / R
 
 **MInfer** is an R package designed for analyzing metabolomics data. It provides tools for data preparation, covariance matrix generation, Jacobian matrix computation, and visualization of metabolite interaction networks.
 
